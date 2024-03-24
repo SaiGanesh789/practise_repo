@@ -41,9 +41,5 @@ public class StudentController {
 		return s;
 
 	}
-	
-	public String name() {
-		return "Sai ganesh";
-	}
-	
+
 }
