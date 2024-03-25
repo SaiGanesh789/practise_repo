@@ -2,18 +2,17 @@ package com.springrest.ganesh.service;
 
 import java.util.List;
 
-
-import com.springrest.ganesh.entity.User;
+import com.springrest.ganesh.dto.UserDto;
 
 public interface UserService {
 
-	User createUser(User user);
+	UserDto createUser(UserDto user);
 	
-	User getUserById(long UserId);
+	UserDto getUserById(long UserId);
 	
-	List<User> getAllUsers();
+	List<UserDto> getAllUsers();
 	
-	User updateUser(User user);
+	UserDto updateUser(UserDto user);
 	
 	void deleteUser(long id);
 

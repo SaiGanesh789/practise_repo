@@ -1,27 +1,10 @@
-package com.springrest.ganesh.entity;
+package com.springrest.ganesh.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+public class UserDto {
 
-@Entity
-@Table(name = "users_sai")
-public class User {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
-	@Column(nullable = false)
 	private String firstName;
-
-	@Column(nullable = false)
 	private String lastName;
-
-	@Column(nullable = false, unique = true)
 	private String email;
 
 	public long getId() {
@@ -56,7 +39,7 @@ public class User {
 		this.email = email;
 	}
 
-	public User(long id, String firstName, String lastName, String email) {
+	public UserDto(long id, String firstName, String lastName, String email) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -64,7 +47,7 @@ public class User {
 		this.email = email;
 	}
 
-	public User() {
+	public UserDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

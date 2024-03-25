@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springrest.ganesh.dto.UserDto;
 import com.springrest.ganesh.entity.User;
 import com.springrest.ganesh.service.UserService;
 
@@ -25,28 +26,28 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping
-	public ResponseEntity<User> createUser(@RequestBody User user) {
-		User savedUser = userService.createUser(user);
+	public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
+		UserDto savedUser = userService.createUser(user);
 		return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 	}
 
 	@GetMapping("{id}")
-	public ResponseEntity<User> getUserId(@PathVariable("id") long userId) {
-		User user = userService.getUserById(userId);
+	public ResponseEntity<UserDto> getUserId(@PathVariable("id") long userId) {
+		UserDto user = userService.getUserById(userId);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 	@GetMapping("allusers")
-	public ResponseEntity<List<User>> getAllusers() {
-		List<User> users = userService.getAllUsers();
-		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	public ResponseEntity<List<UserDto>> getAllusers() {
+		List<UserDto> users = userService.getAllUsers();
+		return new ResponseEntity<List<UserDto>>(users, HttpStatus.OK);
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
+	public ResponseEntity<UserDto> updateUser(@PathVariable("id") long id, @RequestBody UserDto user) {
 		user.setId(id);
-		User updatedUser = userService.updateUser(user);
-		return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
+		UserDto updatedUser = userService.updateUser(user);
+		return new ResponseEntity<UserDto>(updatedUser, HttpStatus.OK);
 	}
 
 	@DeleteMapping("{id}")
