@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.springrest.ganesh.dto.UserDto;
 import com.springrest.ganesh.entity.User;
+import com.springrest.ganesh.exception.EmailAlreadyExistException;
+import com.springrest.ganesh.exception.ResourceNotFoundException;
 import com.springrest.ganesh.mapper.UserMapper;
 import com.springrest.ganesh.repository.UserReposistory;
 import com.springrest.ganesh.service.UserService;
@@ -26,6 +28,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		// User user = UserMapper.userToUserDto(userDto);
+		Optional<User> optionalUser = userRepository.findByEmail(userDto.getEmail());
+		if (optionalUser.isPresent()) {
+			throw new EmailAlreadyExistException("Email already exists");
+		}
+		
 		User user = modelmapper.map(userDto, User.class);
 		User savedUser = userRepository.save(user);
 		// UserDto savedUserDto = UserMapper.userDtotoUser(savedUser);
@@ -36,8 +43,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUserById(long UserId) {
-		Optional<User> optionalUser = userRepository.findById(UserId);
-		User user = optionalUser.get();
+		User user = userRepository.findById(UserId)
+				.orElseThrow(() -> new ResourceNotFoundException("user", "id", UserId));
+
 		// UserDto userDto = UserMapper.userDtotoUser(user);
 		UserDto userDto = modelmapper.map(user, UserDto.class);
 		return userDto;
@@ -53,7 +61,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserDto user) {
-		User existinguser = userRepository.findById(user.getId()).get();
+		User existinguser = userRepository.findById(user.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("user", "id", user.getId()));
 		existinguser.setFirstName(user.getFirstName());
 		existinguser.setLastName(user.getLastName());
 		existinguser.setEmail(user.getEmail());
@@ -65,6 +74,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(long id) {
+		User existindUser = userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("user", "id", id));
 		userRepository.deleteById(id);
 	}
 
