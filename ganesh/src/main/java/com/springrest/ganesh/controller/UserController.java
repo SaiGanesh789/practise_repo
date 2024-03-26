@@ -23,6 +23,8 @@ import com.springrest.ganesh.exception.ErrorDetails;
 import com.springrest.ganesh.exception.ResourceNotFoundException;
 import com.springrest.ganesh.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/users")
 public class UserController {
@@ -31,7 +33,7 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping
-	public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
+	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user) {
 		UserDto savedUser = userService.createUser(user);
 		return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 	}
@@ -49,7 +51,7 @@ public class UserController {
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity<UserDto> updateUser(@PathVariable("id") long id, @RequestBody UserDto user) {
+	public ResponseEntity<UserDto> updateUser(@PathVariable("id") long id, @Valid @RequestBody UserDto user) {
 		user.setId(id);
 		UserDto updatedUser = userService.updateUser(user);
 		return new ResponseEntity<UserDto>(updatedUser, HttpStatus.OK);

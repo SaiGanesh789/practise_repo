@@ -1,10 +1,20 @@
 package com.springrest.ganesh.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+
 public class UserDto {
 
 	private long id;
+
+	@NotEmpty(message = "First Name must not be empty")
 	private String firstName;
+
+	@NotEmpty(message = "Last Name must not be empty")
 	private String lastName;
+
+	@NotEmpty(message = "Email must not be empty")
+	@Email(message = "Provide email in correct format")
 	private String email;
 
 	public long getId() {
