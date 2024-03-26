@@ -28,11 +28,9 @@ public class GlobalExceptionHandler {
 				request.getDescription(false), ("EMAIL_ALREADY_EXISTS"));
 		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
-	
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception,
-			WebRequest request) {
+	public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception, WebRequest request) {
 
 		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), exception.getMessage(),
 				request.getDescription(false), ("INTERNAL_SERVER_ERROR"));
